@@ -6,53 +6,66 @@ export default function RippleBackground() {
     const containerRef = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
-        // เช็คว่ารันบน Browser จริงๆ
         if (typeof window === 'undefined') return
 
         let $el: any = null
 
         const initRipples = async () => {
             try {
-                // 1. Import jQuery
+                // 1. โหลด Library
                 const jqImport = await import('jquery');
-                // ดึงตัว function จริงๆ ออกมา (แก้ปัญหา This expression is not callable)
                 const $ = jqImport.default || (jqImport as any);
 
-                // 2. ยัดใส่ window ให้ plugin มองเห็น
                 (window as any).jQuery = $;
                 (window as any).$ = $;
 
-                // 3. Import Plugin
                 await import('jquery.ripples');
 
-                // เช็คว่า container ยังอยู่ไหม
                 if (!containerRef.current) return;
 
-                // 4. เริ่มต้นใช้งาน
                 $el = $(containerRef.current);
-                
-                // ล้างค่าเก่าทิ้งก่อนเสมอ (กันภาพซ้อน/กระตุก)
-                if (typeof $el.ripples === 'function') {
-                     $el.ripples('destroy');
-                }
 
+                // 2. ตั้งค่า Ripples
+                // หมายเหตุ: ปรับ interactive เป็น false เพราะเราจะคุมเอง
                 $el.ripples({
-                    resolution: 512,  // ความละเอียดมาตรฐาน
-                    dropRadius: 20,   // ขนาดวงน้ำ
-                    perturbance: 0.01, // ความหนืด (0.01 = น้ำลึกนิ่งๆ, ลดอาการภาพแตกเป็นเส้น)
-                    interactive: true,
+                    resolution: 512,
+                    dropRadius: 20,
+                    perturbance: 0.01, // น้ำลึกนิ่งๆ
+                    interactive: false, 
                 });
+
+                // 3. (สำคัญมาก) ระบบดักจับเมาส์แบบ Manual
+                // ดักจับเมาส์บน window (หน้าจอทั้งหมด) แล้วสั่งให้ "drop" (หยดน้ำ) ลงไปที่พื้นหลัง
+                const handleMouseMove = (e: MouseEvent) => {
+                    // คำนวณความแรงตามการสะบัดเมาส์ (ถ้าต้องการ) หรือใส่ค่าคงที่ก็ได้
+                    // พิกัด e.clientX, e.clientY คือตำแหน่งเมาส์บนหน้าจอพอดี เพราะพื้นหลังเราเป็น Fixed
+                    $el.ripples('drop', e.clientX, e.clientY, 20, 0.02);
+                };
+
+                window.addEventListener('mousemove', handleMouseMove);
+
+                // เก็บ Cleanup function ไว้ลบ Event Listener เมื่อเปลี่ยนหน้า
+                return () => {
+                    window.removeEventListener('mousemove', handleMouseMove);
+                };
 
             } catch (err) {
                 console.error('Ripples init error:', err);
             }
         };
 
-        // รอ 100ms ให้ CSS โหลดเสร็จก่อนเริ่มคำนวณภาพ
+        // เริ่มทำงาน
         const timer = setTimeout(initRipples, 100);
+        let cleanupFunc: (() => void) | undefined;
+
+        // ดึง cleanup function ออกมาจัดการ
+        initRipples().then((cleanup) => {
+            if (typeof cleanup === 'function') cleanupFunc = cleanup;
+        });
 
         return () => {
             clearTimeout(timer);
+            if (cleanupFunc) cleanupFunc(); // ลบ Event Listener
             if ($el && typeof $el.ripples === 'function') {
                 try { $el.ripples('destroy'); } catch (e) {}
             }
@@ -62,12 +75,12 @@ export default function RippleBackground() {
     return (
         <div
             ref={containerRef}
-            className="fixed inset-0 -z-50 pointer-events-none"
+            className="fixed inset-0 -z-50 pointer-events-none" // pointer-events-none เพื่อให้คลิกทะลุไปโดนปุ่มได้
             style={{
                 backgroundImage: 'url(/images/ocean-bg.jpg)',
-                backgroundSize: 'cover',       // สำคัญ: ขยายเต็มจอ
-                backgroundPosition: 'center',  // สำคัญ: จัดกึ่งกลาง
-                backgroundColor: '#020617',    // สีรองพื้น
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundColor: '#020617',
                 width: '100vw',
                 height: '100vh',
             }}

@@ -3,6 +3,7 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import Button from '@/app/components/ui/button'
+import Image from 'next/image'
 
 export default function HeroSection() {
     return (
@@ -22,12 +23,12 @@ export default function HeroSection() {
                             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span>
                             <span className="relative inline-flex rounded-full h-2 w-2 bg-secondary"></span>
                         </span>
-                        พร้อมรับงาน (Available for hire)
+                        Available for hire
                     </div>
 
                     {/* ใช้ bg-linear-to-r แทน bg-gradient-to-r ใน v4 */}
                     <h1 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight">
-                        สวัสดีครับ ผม <span className="bg-linear-to-r from-primary via-purple-400 to-secondary bg-clip-text text-transparent glow-text">ชื่อของคุณ</span>
+                        Hello i'm <span className="bg-linear-to-r from-primary via-purple-400 to-secondary bg-clip-text text-transparent glow-text">Toon</span>
                     </h1>
 
                     <h2 className="text-2xl md:text-3xl text-muted-foreground mb-6 font-light">
@@ -48,19 +49,14 @@ export default function HeroSection() {
                 </motion.div>
 
                 <motion.div
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.8 }}
                     className="relative flex justify-center"
                 >
                     <div className="relative w-64 h-64 md:w-96 md:h-96">
-                        {/* Spinning border effect */}
-                        <div className="absolute inset-0 rounded-full border border-primary/30 border-dashed animate-[spin_10s_linear_infinite]" />
-                        <div className="absolute inset-4 rounded-full border border-secondary/30 border-dashed animate-[spin_15s_linear_infinite_reverse]" />
-
-                        {/* Profile Image Placeholder */}
                         <div className="absolute inset-8 rounded-full bg-gradient-to-b from-gray-800 to-black overflow-hidden border-2 border-primary/50 glow-box flex items-center justify-center">
-                            <span className="text-gray-500">Profile Image</span>
+                            <img
+                                src="/images/toon.jpg"
+                                alt="Profile"
+                                className="w-full h-full object-cover" />
                         </div>
                     </div>
                 </motion.div>
