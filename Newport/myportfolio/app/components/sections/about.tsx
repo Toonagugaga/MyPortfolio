@@ -10,7 +10,7 @@ export default function AboutSection() {
         <section id="about" className="py-20 px-6 bg-white/5 border-y border-white/5">
             <div className="max-w-4xl mx-auto text-center">
                 <motion.div {...fadeInUp}>
-                    <h2 className="text-3xl md:text-4xl font-bold mb-8">Crafting Digital Experiences <br /> With Passion</h2>
+                    <h2 className="text-3xl md:text-4xl font-bold mb-8">Building Digital Experiences <br /> With Passion</h2>
                     <p className="text-lg text-muted-foreground leading-relaxed mb-10">
                         I am currently pursuing my Bachelor&apos;s degree in Computer Science. My journey began with a simple &quot;Hello World&quot; and has evolved into a deep passion for full-stack development. I love bridging the gap between design and engineering, ensuring every pixel serves a purpose.
                     </p>

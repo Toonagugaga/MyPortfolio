@@ -24,14 +24,11 @@ export default function EducationSection() {
                             <div className="flex flex-wrap justify-between items-start mb-2">
                                 <div>
                                     <h3 className="text-xl font-bold text-white">Bachelor of Science in Computer Science</h3>
-                                    <p className="text-primary">Tech University of the Cosmos</p>
+                                    <p className="text-primary">Tech University of the rajamangala university of technology isan</p>
                                 </div>
-                                <span className="text-sm text-muted-foreground bg-white/5 px-3 py-1 rounded-full">2022 - Present</span>
+                                <span className="text-sm text-muted-foreground bg-white/5 px-3 py-1 rounded-full">2026 - Present</span>
                             </div>
                             <ul className="list-disc list-inside text-muted-foreground space-y-1 text-sm mt-4">
-                                <li>Dean&apos;s List: Fall 2023, Spring 2024</li>
-                                <li>Relevant Coursework: Data Structures, Algorithms, Web Development</li>
-                                <li>Vice President of the Coding Club</li>
                             </ul>
                         </Card>
                     </div>
