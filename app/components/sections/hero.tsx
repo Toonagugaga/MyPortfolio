@@ -30,6 +30,15 @@ export default function HeroSection() {
                         สวัสดีครับ ผม <span className="bg-linear-to-r from-primary via-purple-400 to-secondary bg-clip-text text-transparent glow-text">Toon</span>
                     </h1>
 
+                    {/* รูปโปรไฟล์: บนมือถือให้อยู่ใต้คำว่า Toon (เดสก์ท็อปใช้รูปในคอลัมน์ขวาแทน) */}
+                    <div className="md:hidden flex justify-center mb-8">
+                        <div className="relative w-56 h-56">
+                            <div className="absolute inset-0 rounded-full bg-gradient-to-b from-gray-800 to-black overflow-hidden border-2 border-primary/50 glow-box flex items-center justify-center">
+                                <img src="/images/toon.jpg" alt="Profile" className="w-full h-full object-cover" />
+                            </div>
+                        </div>
+                    </div>
+
                     <h2 className="text-2xl md:text-3xl text-muted-foreground mb-6 font-light">
                         Junior Developer & <br className="hidden md:block" /> นักศึกษามหาวิทยาลัย
                     </h2>
@@ -83,7 +92,7 @@ export default function HeroSection() {
                 </motion.div>
 
                 <motion.div
-                    className="relative flex justify-center"
+                    className="relative hidden md:flex justify-center"
                 >
                     <div className="relative w-64 h-64 md:w-96 md:h-96">
                         {/* Profile Image */}
